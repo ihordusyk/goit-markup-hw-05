@@ -1,0 +1,277 @@
+/* ==========================================================================
+   1. БЕКДРОП (ТЕМНИЙ ФОН НА ВЕСЬ ЕКРАН)
+   ========================================================================== */
+.modal-overlay {
+  background-color: rgba(46, 47, 66, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: flex;
+  justify-content: center; /* Центруємо біле вікно по горизонталі */
+  align-items: center; /* Центруємо біле вікно по вертикалі */
+
+  /* Анімація появи (зараз закоментована, щоб ти бачив вікно під час верстки) */
+  /* opacity: 0; */
+  /* pointer-events: none; */
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Клас, який додаватиметься через JavaScript для відкриття модалки */
+.modal-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   2. БІЛА ОСНОВА (САМЕ МОДАЛЬНЕ ВІКНО)
+   ========================================================================== */
+.modal {
+  position: relative; /* 🌟 ГОЛОВНЕ ВИПРАВЛЕННЯ: тепер хрестик не літає по всьому екрану! */
+  border-radius: 4px;
+  padding-block: 72px 24px; /* Великий відступ зверху (72px), щоб звільнити місце для хрестика */
+  padding-inline: 24px;
+  min-width: 408px;
+  min-height: 584px;
+  box-shadow:
+    0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 1px 3px 0 rgba(0, 0, 0, 0.12),
+    0 2px 1px 0 rgba(0, 0, 0, 0.2);
+  background: #fcfcfc;
+  overflow-y: auto; /* Якщо екран буде маленьким, всередині вікна з'явиться скролл */
+}
+
+/* ==========================================================================
+   3. КНОПКА ЗАКРИТТЯ (ХРЕСТИК) В КУТКУ
+   ========================================================================== */
+.modal-close-btn {
+  position: absolute; /* Прив'язується до кутка батьківської коробки .modal */
+  top: 24px; /* Точний відступ зверху */
+  right: 24px; /* Точний відступ справа */
+  width: 24px;
+  height: 24px;
+  border-radius: 50%; /* Робимо ідеальне коло */
+  background-color: #e7e9fc; /* Світло-сірий фон кружечка */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Легка тонка рамка */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  /* Плавна зміна кольорів при наведенні мишки */
+  transition:
+    background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ефекти, коли мишка наводиться на кружечок хрестика */
+.modal-close-btn:hover,
+.modal-close-btn:focus {
+  background-color: #404bbf; /* Кружечок стає темнішим */
+  border: none; /* Стара рамка забирається */
+}
+
+/* Маленька іконка хрестика всередині */
+.modal-close-icon {
+  fill: #2e2f42; /* Спочатку хрестик темний */
+  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Коли навели на кнопку — сам хрестик всередині фарбується у білий колір */
+.modal-close-btn:hover .modal-close-icon,
+.modal-close-btn:focus .modal-close-icon {
+  fill: #ffffff;
+}
+
+/* ==========================================================================
+   4. ЗАГОЛОВОК МОДАЛКИ
+   ========================================================================== */
+.modal-title {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #2e2f42;
+  margin-bottom: 16px; /* Відштовхує перше поле вниз */
+}
+
+/* ==========================================================================
+   5. ПОЛЯ ВВЕДЕННЯ (INPUTS ТА LABELS)
+   ========================================================================== */
+
+/* Коробка для кожного рядка (текст підпису + віконце введення) */
+.modal-field-wrapper {
+  margin-bottom: 8px; /* Відступ між полями форми */
+}
+
+/* Окремий збільшений відступ після коментаря перед чекбоксом */
+.comment-field-margin {
+  margin-bottom: 16px;
+}
+
+/* Маленькі сірі назви полів (Name, Phone, Email...) */
+.modal-label {
+  display: block; /* Стає над інпутом */
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: 0.04em;
+  color: #8e8f99;
+  margin-bottom: 4px; /* Відступ від літер до рамки інпута */
+}
+
+/* Обгортка, яка дозволяє покласти іконку поверх інпута */
+.modal-input-wrapper {
+  position: relative;
+}
+
+/* Стиль білого віконця, куди ми пишемо текст */
+.modal-input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid rgba(46, 47, 66, 0.4); /* Напівпрозора сіра рамка */
+  border-radius: 4px;
+  background-color: transparent;
+  padding-left: 38px; /* 🌟 Важливо: великий відступ зліва, щоб текст не залізав під іконку */
+  color: #2e2f42;
+  outline: transparent; /* Ховаємо стандартне виділення браузера */
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Коли ми клацаємо у полі — рамка стає гарною фіолетовою */
+.modal-input:focus {
+  border-color: #4d5ae5;
+}
+
+/* Маленька сіра іконка всередині поля */
+.modal-input-icon {
+  position: absolute;
+  left: 16px; /* Відступає від лівого краю інпута */
+  top: 50%;
+  transform: translateY(-50%); /* Рівняємо чітко по центру висоти поля */
+  fill: #2e2f42;
+  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 🪄 Магія сусіда (+): коли інпут активний, іконка, що стоїть поруч, ТЕЖ фарбується у фіолетовий */
+.modal-input:focus + .modal-input-icon {
+  fill: #4d5ae5;
+}
+
+/* ==========================================================================
+   6. ВЕЛИКЕ ТЕКСТОВЕ ПОЛЕ ДЛЯ КОМЕНТАРЯ (TEXTAREA)
+   ========================================================================== */
+.modal-textarea {
+  width: 100%;
+  height: 120px; /* Збільшена висота з макета */
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+  border: 1px solid rgba(46, 47, 66, 0.4);
+  border-radius: 4px;
+  background-color: transparent;
+  padding: 8px 16px; /* Однакові красиві відступи для тексту */
+  outline: transparent;
+  resize: none; /* Забороняємо користувачу розтягувати поле мишкою */
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-textarea:focus {
+  border-color: #4d5ae5;
+}
+
+/* Стиль для сірого тексту-підказки "Text input" всередині */
+.modal-textarea::placeholder {
+  color: rgba(46, 47, 66, 0.4);
+}
+
+/* ==========================================================================
+   7. КУСТОМНИЙ ЧЕКБОКС (ПРАВИЛА КОНФІДЕНЦІЙНОСТІ)
+   ========================================================================== */
+.modal-checkbox-wrapper {
+  margin-bottom: 24px; /* Відступ вниз до великої кнопки */
+}
+
+/* Повністю ховаємо рідний некрасивий чекбокс операційної системи */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+/* Текст біля галочки */
+.modal-checkbox-label {
+  font-size: 12px;
+  line-height: 1.17;
+  letter-spacing: 0.04em;
+  color: #8e8f99;
+  display: flex;
+  align-items: center;
+}
+
+/* Наш власний намальований з нуля квадратик */
+.modal-custom-checkbox {
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(46, 47, 66, 0.4); /* Сіра рамка */
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  fill: transparent; /* Ховаємо білу пташку, поки немає кліку */
+  margin-right: 8px; /* Відступ від квадратика до тексту */
+  transition:
+    background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 🪄 Магія: коли рідний чекбокс обрано, наш красивий квадратик стає синім, а пташка — білою */
+.modal-checkbox:checked + .modal-checkbox-label .modal-custom-checkbox {
+  background-color: #404bbf;
+  border: none;
+  fill: #f4f4fd; /* Фарбуємо іконку галочки (пташки) */
+}
+
+/* Синє посилання */
+.modal-privacy-link {
+  color: #4d5ae5;
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   8. ВЕЛИКА СИНЯ КНОПКА "SEND" ПО ЦЕНТРУ
+   ========================================================================== */
+.modal-submit-btn {
+  display: block; /* Перетворюємо у блок, щоб спрацювало автоматичне центрування */
+  min-width: 169px;
+  height: 56px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  background-color: #4d5ae5; /* Наш синій колір */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 auto; /* 🪄 Магія: кнопка стає ідеально по центру форми */
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15); /* Об'ємна тінь з макета */
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-submit-btn:hover,
+.modal-submit-btn:focus {
+  background-color: #404bbf; /* Кнопка красиво темніє при наведенні */
+}
