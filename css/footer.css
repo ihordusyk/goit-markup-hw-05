@@ -77,87 +77,73 @@
   max-width: 264px;
 }
 
-/* ==========================================================================
-   ЛОГІКА ВИРІВНЮВАННЯ ТА ВІДСТУПІВ БЛОКІВ
-   ========================================================================== */
-
-/* Робимо відступ справа від соцмереж до блоку підписки, як у Figma */
 .footer-social {
   margin-right: 83px;
 }
 
-/* Заголовок "Subscribe" робимо копією заголовка "Social media" */
 .subscribe-title {
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: 0.02em;
-  color: #ffffff; /* Робимо білим, щоб не ховався на темному тлі */
-  margin-bottom: 16px; /* Відштовхує форму вниз */
+  color: #ffffff;
+  margin-bottom: 16px;
 }
 
-/* Магія Flexbox: ставимо інпут і кнопку в один горизонтальний рядок */
 .subscribe-form {
   display: flex;
-  gap: 24px; /* Робить точну відстань у 24px між інпутом та кнопкою */
+  gap: 24px;
 }
 
-/* ==========================================================================
-   СТИЛІ ДЛЯ ПОЛЯ ВВЕДЕННЯ ПОШТИ (INPUT)
-   ========================================================================== */
 .subscribe-input {
-  width: 264px; /* Точна ширина поля з макета */
-  height: 40px; /* Точна висота */
-  border: 1px solid #ffffff; /* Тонка біла рамка */
-  background-color: transparent; /* Робимо фон прозорим, щоб бачити колір футера */
+  width: 264px;
+  height: 40px;
+  border: 1px solid #ffffff;
+  background-color: transparent;
   font-size: 12px;
   line-height: 2;
   letter-spacing: 0.04em;
-  padding-left: 16px; /* Текст, який вводять, відступає від лівого краю на 16px */
-  border-radius: 4px; /* Легке закруглення кутів */
-  color: #ffffff; /* Колір літер, які пише користувач */
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* М'яка тінь під інпутом */
+  padding-left: 16px;
+  border-radius: 4px;
+  color: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  outline: transparent;
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Фарбуємо вбудоване слово-підказку "E-mail" у білий колір */
+.subscribe-input:focus {
+  border-color: #31d0aa;
+}
+
 .subscribe-input::placeholder {
   color: #ffffff;
 }
 
-/* ==========================================================================
-   СТИЛІ ДЛЯ СИНЬОЇ КНОПКИ (BUTTON)
-   ========================================================================== */
 .subscribe-btn {
-  min-width: 165px; /* Мінімальна ширина кнопки */
+  min-width: 165px;
   height: 40px;
-  display: flex; /* Вмикаємо флекс всередині кнопки */
-  justify-content: center; /* Центруємо текст і іконку по горизонталі */
-  align-items: center; /* Центруємо текст і іконку по вертикалі */
-  font-family: "Roboto", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0.04em;
-  color: #ffffff; /* Білий колір тексту */
-  background-color: #4d5ae5; /* Синій бренд-колір бренду */
-  border: none; /* Викидаємо стандартну сіру рамку браузера */
-  border-radius: 4px; /* Закруглюємо кути кнопки */
-  cursor: pointer; /* Змінює курсор мишки на "пальчик" при наведенні */
+  color: #ffffff;
+  background-color: #4d5ae5;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 
-  /* Плавний перехід кольору (анімація за 250 мілісекунд) */
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Коли наводимо мишкою або виділяємо табом — кнопка стає красивого темнішого кольору */
 .subscribe-btn:hover,
 .subscribe-btn:focus {
-  background-color: #404bbf;
+  background-color: #31d0aa;
 }
 
-/* ==========================================================================
-   СТИЛІ ДЛЯ ІКОНКИ ЛІТАЧКА (SVG)
-   ========================================================================== */
 .subscribe-icon {
-  margin-left: 16px; /* Штовхає літачок вправо від слова "Subscribe" */
-  fill: #ffffff; /* Фарбує іконку літачка у білий колір */
+  margin-left: 16px;
+  fill: #ffffff;
 }
