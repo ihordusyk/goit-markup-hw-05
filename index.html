@@ -55,7 +55,9 @@
       <section class="hero" id="hero">
         <div class="container container-hero">
           <h1 class="hero-title">Effective Solutions for Your Business</h1>
-          <button type="button" class="hero-button">Order Service</button>
+          <button type="button" class="hero-button" data-modal-open>
+            Order Service
+          </button>
         </div>
       </section>
       <section class="section features" id="features">
@@ -604,9 +606,14 @@
         </div>
       </div>
     </footer>
-    <div class="modal-overlay" id="modal">
+    <div class="modal-overlay" id="modal" data-modal>
       <div class="modal">
-        <button class="modal-close-btn" type="button" aria-label="Close modal">
+        <button
+          class="modal-close-btn"
+          type="button"
+          aria-label="Close modal"
+          data-modal-close
+        >
           <svg class="modal-close-icon" width="8" height="8">
             <use href="./images/icons.svg#icon-close"></use>
           </svg>
@@ -700,5 +707,17 @@
         </form>
       </div>
     </div>
+    <script>
+      const modal = document.querySelector("[data-modal]");
+      const openBtn = document.querySelector("[data-modal-open]");
+      const closeBtn = document.querySelector("[data-modal-close]");
+
+      openBtn.addEventListener("click", toggle);
+      closeBtn.addEventListener("click", toggle);
+
+      function toggle() {
+        modal.classList.toggle("is-open");
+      }
+    </script>
   </body>
 </html>
